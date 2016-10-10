@@ -1,0 +1,76 @@
+@startuml ../img/2_current_less_arrows.png
+
+interface bitcoincli
+interface bitcointx
+interface bitcoind
+interface bitcoinqt
+
+node "LIBBITCOIN_CRYPTO"  {
+}
+
+node "LIBSECP256K1" {
+}
+
+node "LIBBITCOIN_CONSENSUS" {
+}
+
+node "LIBBITCOIN_COMMON" {
+}
+
+node "LIBBITCOIN_UTIL" {
+}
+
+node "LIBUNIVALUE" {
+}
+
+node "LIBBITCOIN_SERVER" {
+}
+
+node "LIBBITCOIN_WALLET" {
+}
+
+node "LIBBITCOIN_CLI" {
+}
+
+node "LIBBITCOINQT" {
+}
+
+node "LIBBITCOIN_ZMQ" {
+}
+
+libbitcoinconsensus --> LIBBITCOIN_CONSENSUS
+
+bitcoincli --> LIBBITCOIN_CLI
+bitcoincli --> LIBUNIVALUE
+
+bitcointx --> LIBUNIVALUE
+bitcointx --> LIBBITCOIN_COMMON
+bitcointx --> LIBBITCOIN_UTIL
+
+bitcoind --> LIBBITCOIN_SERVER
+bitcoind --> LIBUNIVALUE
+
+bitcoinqt --> LIBBITCOIN_SERVER
+bitcoinqt --> LIBUNIVALUE
+bitcoinqt --> LIBBITCOINQT
+
+bitcoind ..> LIBBITCOIN_WALLET
+bitcoinqt ..> LIBBITCOIN_WALLET
+bitcoind ..> LIBBITCOIN_ZMQ
+bitcoinqt ..> LIBBITCOIN_ZMQ
+
+LIBBITCOINQT --> LIBBITCOIN_SERVER
+LIBBITCOIN_WALLET --> LIBBITCOIN_SERVER
+LIBBITCOIN_ZMQ --> LIBBITCOIN_SERVER
+
+LIBBITCOIN_CLI --> LIBBITCOIN_UTIL
+
+LIBBITCOIN_SERVER --> LIBBITCOIN_COMMON
+
+LIBBITCOIN_COMMON --> LIBBITCOIN_UTIL
+LIBBITCOIN_COMMON --> LIBBITCOIN_CONSENSUS
+
+LIBBITCOIN_CONSENSUS --> LIBBITCOIN_CRYPTO
+LIBBITCOIN_CONSENSUS --> LIBSECP256K1
+
+@enduml

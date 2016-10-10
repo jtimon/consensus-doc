@@ -1,0 +1,226 @@
+@startuml ../img/5_phase2_libconsensus.png
+
+interface bitcointx
+interface bitcoind
+
+node "LIBBITCOIN_CRYPTO"  {
+folder crypto #Default {
+   [common.h] #Green
+   [ripemd160.o] #Green
+   [sha1.o] #Green
+   [sha256.o] #Green
+   [sha512.o] #Green
+   [hmac_sha512.o] #Green
+   [hmac_sha256.o]
+   [aes.o]
+}
+}
+
+node "LIBSECP256K1" #Green {
+}
+
+node "LIBBITCOIN_CONSENSUS" {
+  folder consensus #Default {
+    [consensus.h] #Green
+    [merkle.o] #Green
+    [params.h] #Green
+    [validation.h] #Green
+    [interfaces.h] #Green
+  }
+  folder script #Default {
+    [bitcoinconsensus.o] #Green
+    [interpreter.o] #Green
+    [script.o] #Green
+    [script_error.o] #Green
+    [sigcache.o] #Orange
+  }
+  folder primitives #Default {
+    [block.o] #Green
+    [transaction.o] #Green
+  }
+    [amount.h] #Orange
+    [arith_uint256.o] #Green
+    [hash.o] #Green
+    [prevector.h] #Green
+    [pubkey.o] #Green
+    [serialize.h] #Green
+    [tinyformat.h] #Green
+    [uint256.o] #Green
+    [utilstrencodings.o] #Green
+    [version.h] #Green
+    [pow.o] #Green
+    [header_verify.cpp] #Green 
+    [pow.o] #Green
+    [pow.o] #Green
+}
+
+node "LIBBITCOIN_COMMON" {
+    [amount.cpp] #Orange
+    [coins.o] #Red
+}
+
+node "LIBBITCOIN_UTIL" {
+    [utilmoneystr.o] #Orange
+    [random.o] #Purple
+    [util.o] #Purple
+}
+
+node "LIBUNIVALUE" {
+}
+
+node "LIBBITCOIN_SERVER" {
+  [main.o] #Red
+  [chain.o] #Red
+  [net.o]
+  [versionbits.o] #Red
+}
+
+folder compat #Default {
+    [endian.h] #Orange
+}
+
+libbitcoinconsensus --> LIBBITCOIN_CONSENSUS
+
+bitcointx --> LIBUNIVALUE
+bitcointx --> LIBBITCOIN_COMMON
+bitcointx --> LIBBITCOIN_UTIL
+
+bitcoind --> LIBBITCOIN_SERVER
+bitcoind --> LIBUNIVALUE
+
+LIBBITCOIN_SERVER --> LIBBITCOIN_COMMON
+
+LIBBITCOIN_COMMON --> LIBBITCOIN_UTIL
+LIBBITCOIN_COMMON --> LIBBITCOIN_CONSENSUS
+
+LIBBITCOIN_CONSENSUS --> LIBBITCOIN_CRYPTO
+LIBBITCOIN_CONSENSUS --> LIBSECP256K1
+
+
+[bitcoinconsensus.o] --> [interpreter.o]
+[bitcoinconsensus.o] --> [pubkey.o]
+[bitcoinconsensus.o] --> [transaction.o]
+[bitcoinconsensus.o] --> [uint256.o]
+[bitcoinconsensus.o] --> [version.h]
+
+[interpreter.o] --> [transaction.o]
+[interpreter.o] --> [script_error.o]
+[interpreter.o] --> [ripemd160.o]
+[interpreter.o] --> [sha1.o]
+[interpreter.o] --> [sha256.o]
+[interpreter.o] --> [pubkey.o]
+[interpreter.o] --> [script.o]
+[interpreter.o] --> [uint256.o]
+
+[transaction.o] --> [amount.h]
+[transaction.o] --> [script.o]
+[transaction.o] --> [serialize.h]
+[transaction.o] --> [uint256.o]
+[transaction.o] --> [hash.o]
+[transaction.o] --> [tinyformat.h]
+[transaction.o] --> [utilstrencodings.o]
+
+[pubkey.o] --> [hash.o]
+[pubkey.o] --> [serialize.h]
+[pubkey.o] --> [uint256.o]
+[pubkey.o] --> LIBSECP256K1
+
+[uint256.o] --> [common.h]
+[uint256.o] --> [utilstrencodings.o]
+
+[common.h] --> [endian.h]
+
+[main.o] --> [chain.o]
+[main.o] --> [coins.o]
+[main.o] --> [net.o]
+[main.o] --> [versionbits.o]
+[main.o] --> [pow.o]
+[main.o] --> [amount.cpp]
+[main.o] --> [utilmoneystr.o]
+[main.o] --> [validation.h]
+[main.o] --> [consensus.h]
+[main.o] --> [params.h]
+[main.o] --> [merkle.o]
+[main.o] --> [sigcache.o]
+
+[hash.o] --> [ripemd160.o]
+[hash.o] --> [sha256.o]
+[hash.o] --> [prevector.h]
+[hash.o] --> [serialize.h]
+[hash.o] --> [uint256.o]
+[hash.o] --> [version.h]
+[hash.o] --> [common.h]
+[hash.o] --> [hmac_sha512.o]
+[hash.o] --> [pubkey.o]
+
+[hmac_sha512.o] --> [sha512.o]
+[sha512.o] --> [common.h]
+[hmac_sha256.o] --> [sha256.o]
+[sha256.o] --> [common.h]
+[aes.o] --> [common.h]
+[ripemd160.o] --> [common.h]
+[sha1.o] --> [common.h]
+
+[serialize.h] --> [endian.h]
+[serialize.h] --> [prevector.h]
+
+[block.o] --> [transaction.o]
+[block.o] --> [serialize.h]
+[block.o] --> [uint256.o]
+[block.o] --> [hash.o]
+[block.o] --> [tinyformat.h]
+[block.o] --> [utilstrencodings.o]
+[block.o] --> [common.h]
+
+[script.o] --> [tinyformat.h]
+[script.o] --> [utilstrencodings.o]
+[script.o] --> [common.h]
+[script.o] --> [prevector.h]
+
+[sigcache.o] --> [memusage.h]
+[sigcache.o] --> [pubkey.o]
+[sigcache.o] --> [random.o]
+[sigcache.o] --> [uint256.o]
+[sigcache.o] --> [util.o]
+[sigcache.o] --> [interpreter.o]
+
+[memusage.h] #Orange
+
+[memusage.h] --> [indirectmap.h]
+
+[merkle.o] --> [transaction.o]
+[merkle.o] --> [block.o]
+[merkle.o] --> [uint256.o]
+[merkle.o] --> [hash.o]
+[merkle.o] --> [utilstrencodings.o]
+
+[params.h] --> [uint256.o]
+
+[pow.o] --> [params.h]
+[pow.o] --> [arith_uint256.o]
+[pow.o] --> [block.o]
+[pow.o] --> [uint256.o]
+
+[versionbits.o] --> [chain.o]
+[versionbits.o] --> [params.h]
+
+[arith_uint256.o] --> [uint256.o]
+[arith_uint256.o] --> [utilstrencodings.o]
+[arith_uint256.o] --> [common.h]
+
+' Phase 1 #8493
+[main.o] --> [header_verify.cpp]
+[bitcoinconsensus.o] --> [header_verify.cpp]
+
+[chain.o] --> [interfaces.h]
+[pow.o] --> [interfaces.h]
+
+[consensus.h] --> [params.h]
+[header_verify.cpp] --> [consensus.h]
+[header_verify.cpp] --> [pow.o]
+[header_verify.cpp] --> [interfaces.h]
+[header_verify.cpp] --> [validation.h]
+[header_verify.cpp] --> [tinyformat.h]
+[header_verify.cpp] --> [block.o]
+
+@enduml

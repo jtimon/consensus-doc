@@ -1,0 +1,44 @@
+@startuml ../img/3_current_simpler.png
+
+interface bitcointx
+interface bitcoind
+
+node "LIBBITCOIN_CRYPTO"  {
+}
+
+node "LIBSECP256K1" {
+}
+
+node "LIBBITCOIN_CONSENSUS" {
+}
+
+node "LIBBITCOIN_COMMON" {
+}
+
+node "LIBBITCOIN_UTIL" {
+}
+
+node "LIBUNIVALUE" {
+}
+
+node "LIBBITCOIN_SERVER" {
+}
+
+libbitcoinconsensus --> LIBBITCOIN_CONSENSUS
+
+bitcointx --> LIBUNIVALUE
+bitcointx --> LIBBITCOIN_COMMON
+bitcointx --> LIBBITCOIN_UTIL
+
+bitcoind --> LIBBITCOIN_SERVER
+bitcoind --> LIBUNIVALUE
+
+LIBBITCOIN_SERVER --> LIBBITCOIN_COMMON
+
+LIBBITCOIN_COMMON --> LIBBITCOIN_UTIL
+LIBBITCOIN_COMMON --> LIBBITCOIN_CONSENSUS
+
+LIBBITCOIN_CONSENSUS --> LIBBITCOIN_CRYPTO
+LIBBITCOIN_CONSENSUS --> LIBSECP256K1
+
+@enduml
