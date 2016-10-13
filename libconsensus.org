@@ -210,11 +210,41 @@ the consensus package, we need to decoupled the from chain.o (where
 
 \newpage
 * TODO Phase 3: Expose =GetConsensusFlags()=
+
+#+CAPTION:    Phase 3: Expose =GetConsensusFlags()=
+#+LABEL:      pic_6_phase3
+#+ATTR_LaTeX: width=\textwidth
+[[./img/6_phase3_libconsensus.png]]
+
+\newpage
 * TODO Phase 4: Expose =VerifyTx()=
+
+#+CAPTION:    Phase 4: Expose =VerifyTx()=
+#+LABEL:      pic_7_phase4
+#+ATTR_LaTeX: width=\textwidth
+[[./img/7_phase4_libconsensus.png]]
+
+\newpage
 * TODO Phase 5: Complete libconsensus API (expose =VerifyBlock()=)
+
+#+CAPTION:    Phase 5: Expose =VerifyBlock()=
+#+LABEL:      pic_8_phase5
+#+ATTR_LaTeX: width=\textwidth
+[[./img/8_phase5_libconsensus.png]]
+
+\newpage
 * TODO Phase 6: Separate libconsensus to its own repository
 ** Phase 6.1: Remove non-consensus code.
 ** Phase 6.2: Move all consensus code to the same directory
 ** Phase 6.3: Create a sub-repository or subtree
+
+#+CAPTION:    Phase 6: Separate libconsensus to its own repository
+#+LABEL:      pic_9_phase6
+#+ATTR_LaTeX: width=\textwidth
+[[./img/9_phase6_libconsensus.png]]
+
+\newpage
 * TODO Phase 7: Make Bitcoin Core eat its own dog food
+\newpage
 * TODO Final proposed complete libconsensus' C API
+\newpage

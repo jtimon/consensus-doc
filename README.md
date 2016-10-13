@@ -8,7 +8,7 @@ texlive
 emacs
 plantuml
 java
-Graphviz
+graphviz
 
 ## Generate images:
 
